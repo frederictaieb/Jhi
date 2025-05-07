@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import Image from 'next/image'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Switch } from '@headlessui/react'
@@ -41,10 +42,12 @@ const ProfileMenu: React.FC = () => {
         <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
           <span className="absolute -inset-1.5" />
           <span className="sr-only">Open user menu</span>
-          <img
+          <Image
             alt=""
             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            className="size-8 rounded-full"
+            width={32}
+            height={32}
+            className="rounded-full"
           />
         </MenuButton>
       </div>
@@ -92,7 +95,7 @@ export default function Navbar(): React.ReactElement {
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
-      {({ open }) => (
+      {() => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
@@ -109,10 +112,12 @@ export default function Navbar(): React.ReactElement {
               {/* Logo positioned on the left for desktop */}
               <div className="flex flex-1 items-center justify-start">
                 <div className="flex shrink-0 items-center">
-                  <img
+                  <Image
                     alt="Your Company"
                     src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                    className="h-8 w-auto"
+                    width={32}
+                    height={32}
+                    className="w-auto"
                   />
                 </div>
               </div>
