@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+/* styles/globals.css */
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+    scroll-behavior: smooth; /* Ce paramètre permet un effet de défilement fluide */
+    touch-action: none; /* Bloque le défilement tactile (utile sur mobile) */
+    background-color: var(--color-gray-800);
+  }
+  
+  body {
+    position: relative;
+    animation: rebound 0.5s ease-out; /* Animation pour l'effet de rebond */
+  }
+  
+  /* L'animation pour un léger rebond */
+  @keyframes rebound {
+    0% {
+      transform: translateY(0); /* Position initiale */
+    }
+    30% {
+      transform: translateY(5px); /* Légère poussée vers le bas */
+    }
+    50% {
+      transform: translateY(-3px); /* Légère remontée */
+    }
+    70% {
+      transform: translateY(2px); /* Rebond plus léger */
+    }
+    100% {
+      transform: translateY(0); /* Retour à la position initiale */
+    }
+  }
+  
+

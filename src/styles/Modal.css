@@ -1,0 +1,196 @@
+/* styles/Modal.css */
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  background-color: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: modalFadeIn 0.3s;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.modal-close:hover {
+  background-color: #f0f0f0;
+}
+
+.modal-content {
+  padding: 20px;
+}
+
+/* Style pour le profil utilisateur */
+.user-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.user-profile-header {
+  display: flex;
+  gap: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.user-profile-photo {
+  width: 120px;
+  height: 120px;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.user-profile-basic-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.user-profile-name {
+  margin: 0 0 8px 0;
+  font-size: 1.8rem;
+}
+
+.user-profile-age {
+  font-weight: normal;
+  color: #555;
+}
+
+.user-profile-location {
+  margin: 0 0 8px 0;
+  color: #555;
+}
+
+.user-profile-likes {
+  margin: 0;
+  font-weight: 500;
+}
+
+.user-profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.user-profile-section {
+  margin-bottom: 16px;
+}
+
+.user-profile-section-title {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.user-profile-bio {
+  margin: 0;
+  line-height: 1.5;
+  color: #444;
+}
+
+.user-profile-interests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.user-profile-interest-tag {
+  background-color: #f0f0f0;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+}
+
+.user-profile-languages {
+  display: flex;
+  gap: 12px;
+}
+
+.user-profile-language {
+  color: #555;
+}
+
+.user-profile-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.user-profile-contact-btn, .user-profile-like-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.user-profile-contact-btn {
+  background-color: lightblue;
+  color: black;
+}
+
+.user-profile-like-btn {
+  background-color: lightcoral;
+  color: black;
+}
+
+.user-profile-contact-btn:hover, .user-profile-like-btn:hover {
+  opacity: 0.9;
+} 

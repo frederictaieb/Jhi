@@ -1,0 +1,107 @@
+/* styles/ThreeColumns.css */
+@import "tailwindcss";
+
+/* Conteneur pour les colonnes */
+
+.mainboard-container {
+    display: flex;
+    height: 80vh;
+    padding: 25px;
+  }
+  
+  /* Style de base pour chaque colonne */
+  .column-body {
+    width: 33.33%;
+    height: 80vh;
+    overflow-y: auto;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: var(--color-white);
+  }
+  
+  /* Contenu à l'intérieur des colonnes */
+  .content {
+    height: 200%;
+  }
+  
+  /* Styles spécifiques pour chaque colonne */
+  .column-left {
+    border-left: 1px solid var(--color-gray-600);
+    border-top: 1px solid var(--color-gray-600);
+    border-bottom: 1px solid var(--color-gray-600);
+    background-color: var(--color-gray-800);
+    
+  }
+  
+  .column-center {
+    border: 1px solid var(--color-gray-600);
+    background-color: var(--color-gray-800);
+  }
+  
+  .column-right {
+    border-right: 1px solid var(--color-gray-600);
+    border-top: 1px solid var(--color-gray-600);
+    border-bottom: 1px solid var(--color-gray-600);
+    background-color: var(--color-gray-800);
+  }
+  
+
+  .user-row {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--color-gray-600); /* ligne de séparation */
+  }
+  
+  .user-card-clickable {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .user-card-clickable:hover {
+    transform: translateY(-4px);
+    box-shadow: 2px 2px 8px var(--color-gray-600);
+    border-bottom: 1px solid var(--color-gray-800);
+
+  }
+  
+  .user-photo {
+    width: 90px;
+    height: 90px;
+    background-color: #ccc; /* juste un fond gris pour illustration */
+    margin-right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .user-data {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-line {
+    display: flex;
+    gap: 10px; /* espace entre les éléments */
+  }
+  
+  /* Style pour le bouton Join */
+  .Button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .Button:hover {
+    background-color: #45a049;
+  }
