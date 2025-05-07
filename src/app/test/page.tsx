@@ -1,45 +1,44 @@
 'use client'
 import { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabaseClient';
+// import { supabase } from '../../lib/supabaseClient'; // No longer needed directly here
+import { fetchAllUsers, UserType } from '../../lib/services/userService'; // Import from the new service
 
-interface UserType {
-  id: string;
-  name: string;
-  age: number;
-}
+// interface UserType { // This will be imported from userService
+//   id: string;
+//   name: string;
+//   age: number;
+// }
 
-export default function test() {
+export default function TestPage() { // Renamed component to follow PascalCase convention for components
   const [users, setUsers] = useState<UserType[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null); // Optional: for displaying errors
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const loadUsers = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        const { data, error } = await supabase
-          .from('user')
-          .select('*')
-          .order('name', { ascending: true });
-
-        if (error) {
-          throw error;
-        }
-        
-        setUsers(data || []);
-      } catch (error) {
-        console.error('Error fetching users:', error);
+        const fetchedUsers = await fetchAllUsers();
+        console.log('Fetched users in component:', fetchedUsers);
+        setUsers(fetchedUsers);
+      } catch (e: any) {
+        console.error('Error loading users in component:', e.message);
+        setError('Failed to load users. Please try again later.'); // Set an error message for the UI
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUsers();
+    loadUsers();
   }, []);
 
   if (loading) return <p>Loading users...</p>;
+  if (error) return <p style={{ color: 'red' }}>Error: {error}</p>; // Display error message
 
   return (
     <div>
-      <h1>User List</h1>
+      <h1>TEST</h1>
       <ul>
         {users.map((user) => (
           <li key={user.id}>

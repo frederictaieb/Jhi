@@ -23,9 +23,10 @@ interface User {
 interface UserListProps {
   users: User[];
   columnType: 'left' | 'center' | 'right';
+  title?: string;
 }
 
-const UserList: React.FC<UserListProps> = ({ users, columnType}) => {
+const UserList: React.FC<UserListProps> = ({ users, columnType, title }) => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -40,6 +41,7 @@ const UserList: React.FC<UserListProps> = ({ users, columnType}) => {
 
   return (
     <div className={`column-body column-${columnType}`}>
+      {title && <h2 className="column-title">{title}</h2>}
       {users.map((user) => (
         <UserCard
           key={user.id}
