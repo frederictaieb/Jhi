@@ -10,7 +10,6 @@ interface UserProps {
   likes?: number;
   photo?: string;
   onClick: () => void;
-  showJoinButton?: boolean;
 }
 
 const UserCard: React.FC<UserProps> = ({
@@ -20,8 +19,7 @@ const UserCard: React.FC<UserProps> = ({
   country,
   likes,
   photo,
-  onClick,
-  showJoinButton = false
+  onClick
 }) => {
   return (
     <div 
