@@ -84,11 +84,6 @@ const ProfileMenu: React.FC = () => {
   )
 }
 
-// Helper function for conditional class names
-function classNames(...classes: string[]): string {
-  return classes.filter(Boolean).join(' ')
-}
-
 export default function Navbar(): React.ReactElement {
   // State for broadcast switch
   const [broadcastEnabled, setBroadcastEnabled] = useState(false)
