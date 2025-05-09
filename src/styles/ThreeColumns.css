@@ -2,27 +2,48 @@
 @import "tailwindcss";
 
 /* Conteneur pour les colonnes */
-
 .mainboard-container {
     display: flex;
     height: 80vh;
     padding: 25px;
   }
   
-  /* Style de base pour chaque colonne */
-  .column-body {
+  /* Style pour le conteneur de colonne avec titre fixe et contenu défilant */
+  .column-container {
     width: 33.33%;
     height: 80vh;
-    overflow-y: auto;
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
     color: var(--color-white);
+    position: relative;
   }
   
-  /* Contenu à l'intérieur des colonnes */
-  .content {
-    height: 200%;
+  /* En-tête fixe de la colonne contenant le titre */
+  .column-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--color-gray-800); /* Même couleur que le fond de la colonne */
+    padding: 10px;
+    border-bottom: 1px solid var(--color-gray-600);
+    margin-bottom: 10px;
+  }
+  
+  /* Contenu défilant */
+  .column-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 10px;
+    padding-bottom: 20px;
+  }
+  
+  /* Style pour le titre de colonne */
+  .column-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 10px;
+    color: var(--color-white);
   }
   
   /* Styles spécifiques pour chaque colonne */
@@ -31,7 +52,6 @@
     border-top: 1px solid var(--color-gray-600);
     border-bottom: 1px solid var(--color-gray-600);
     background-color: var(--color-gray-800);
-    
   }
   
   .column-center {
@@ -46,17 +66,6 @@
     background-color: var(--color-gray-800);
   }
   
-  /* Style pour le titre de colonne */
-  .column-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--color-gray-600);
-    color: var(--color-white);
-  }
-
   .user-row {
     display: flex;
     align-items: center;

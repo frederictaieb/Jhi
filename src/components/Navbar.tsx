@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Switch } from '@headlessui/react'
+import { useAuth } from '@/contexts/AuthContext'
+import Link from 'next/link'
 
 // Switch component for better modularity
 interface BroadcastSwitchProps {
@@ -36,43 +38,56 @@ const BroadcastSwitch: React.FC<BroadcastSwitchProps> = ({ enabled, setEnabled }
 
 // Profile menu component for better modularity
 const ProfileMenu: React.FC = () => {
+  const { user, signOut } = useAuth();
+  
+  const handleSignOut = async () => {
+    await signOut();
+  };
+  
   return (
     <Menu as="div" className="relative ml-3">
       <div>
         <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
           <span className="absolute -inset-1.5" />
           <span className="sr-only">Open user menu</span>
-
+          <div className="h-8 w-8 rounded-full bg-gray-600 flex items-center justify-center text-white">
+            {user ? user.email?.charAt(0).toUpperCase() : '?'}
+          </div>
         </MenuButton>
       </div>
       <MenuItems
         transition
         className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
       >
-        <MenuItem>
-          <a
-            href="#"
-            className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
-          >
-            Your Profile
-          </a>
-        </MenuItem>
-        <MenuItem>
-          <a
-            href="#"
-            className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
-          >
-            Settings
-          </a>
-        </MenuItem>
-        <MenuItem>
-          <a
-            href="#"
-            className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
-          >
-            Sign out
-          </a>
-        </MenuItem>
+        {user ? (
+          <>
+            <MenuItem>
+              <Link
+                href="/dashboard"
+                className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+              >
+                Tableau de bord
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <button
+                onClick={handleSignOut}
+                className="block w-full text-left px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+              >
+                Déconnexion
+              </button>
+            </MenuItem>
+          </>
+        ) : (
+          <MenuItem>
+            <Link
+              href="/"
+              className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+            >
+              Connexion
+            </Link>
+          </MenuItem>
+        )}
       </MenuItems>
     </Menu>
   )
@@ -81,6 +96,7 @@ const ProfileMenu: React.FC = () => {
 export default function Navbar(): React.ReactElement {
   // State for broadcast switch
   const [broadcastEnabled, setBroadcastEnabled] = useState(false)
+  const { user } = useAuth();
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -101,23 +117,28 @@ export default function Navbar(): React.ReactElement {
               {/* Logo positioned on the left for desktop */}
               <div className="flex flex-1 items-center justify-start">
                 <div className="flex shrink-0 items-center">
-                  <Image
-                    alt="Logo"
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                    width={32}
-                    height={32}
-                    className="w-auto"
-                  />
+                  <Link href={user ? '/dashboard' : '/'}>
+                    <Image
+                      alt="Logo"
+                      src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                      width={32}
+                      height={32}
+                      className="w-auto"
+                    />
+                  </Link>
                 </div>
+                <div className="ml-4 text-white font-semibold">Plateforme XRP</div>
               </div>
 
               {/* Right side elements: broadcast switch and profile */}
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {/* Broadcast switch */}
-                <BroadcastSwitch 
-                  enabled={broadcastEnabled} 
-                  setEnabled={setBroadcastEnabled} 
-                />
+                {/* Only show broadcast switch if user is logged in */}
+                {user && (
+                  <BroadcastSwitch 
+                    enabled={broadcastEnabled} 
+                    setEnabled={setBroadcastEnabled} 
+                  />
+                )}
                 
                 {/* Profile menu */}
                 <ProfileMenu />

@@ -40,20 +40,27 @@ const UserList: React.FC<UserListProps> = ({ users, columnType, title }) => {
   };
 
   return (
-    <div className={`column-body column-${columnType}`}>
-      {title && <h2 className="column-title">{title}</h2>}
-      {users.map((user) => (
-        <UserCard
-          key={user.id}
-          name={user.name}
-          age={user.age}
-          city={user.city}
-          country={user.country}
-          likes={user.likes}
-          photo={user.photo}
-          onClick={() => handleUserClick(user)}
-        />
-      ))}
+    <div className={`column-container column-${columnType}`}>
+      {/* Titre fixe */}
+      {title && <div className="column-header">
+        <h2 className="column-title">{title}</h2>
+      </div>}
+      
+      {/* Contenu défilant */}
+      <div className="column-content">
+        {users.map((user) => (
+          <UserCard
+            key={user.id}
+            name={user.name}
+            age={user.age}
+            city={user.city}
+            country={user.country}
+            likes={user.likes}
+            photo={user.photo}
+            onClick={() => handleUserClick(user)}
+          />
+        ))}
+      </div>
 
       {selectedUser && (
         <Modal
