@@ -30,9 +30,12 @@ const UserList: React.FC<UserListProps> = ({ users, columnType, title }) => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const handleUserClick = (user: User) => {
-    setSelectedUser(user);
-    setIsModalOpen(true);
+  const handleUserClick = (userId: string, userName: string) => {
+    const user = users.find(u => u.id === userId);
+    if (user) {
+      setSelectedUser(user);
+      setIsModalOpen(true);
+    }
   };
 
   const handleCloseModal = () => {
@@ -51,13 +54,14 @@ const UserList: React.FC<UserListProps> = ({ users, columnType, title }) => {
         {users.map((user) => (
           <UserCard
             key={user.id}
+            id={user.id}
             name={user.name}
             age={user.age}
             city={user.city}
             country={user.country}
             likes={user.likes}
             photo={user.photo}
-            onClick={() => handleUserClick(user)}
+            onClick={handleUserClick}
           />
         ))}
       </div>
@@ -67,6 +71,9 @@ const UserList: React.FC<UserListProps> = ({ users, columnType, title }) => {
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           title={`Profil de ${selectedUser.name}`}
+          userId={selectedUser.id}
+          userName={selectedUser.name}
+          isUserProfile={true}
         >
           <UserProfile
             name={selectedUser.name}
@@ -79,6 +86,7 @@ const UserList: React.FC<UserListProps> = ({ users, columnType, title }) => {
             interests={selectedUser.interests}
             languages={selectedUser.languages}
             comments={selectedUser.comments}
+            userId={selectedUser.id}
           />
         </Modal>
       )}

@@ -13,6 +13,7 @@ interface UserProfileProps {
   interests?: string[];
   languages?: string[];
   comments?: string[];
+  userId?: string;
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({
@@ -28,30 +29,36 @@ const UserProfile: React.FC<UserProfileProps> = ({
   comments = [],
 }) => {
   return (
-    <div className="user-profile">
-      <div className="user-profile-header">
-        <div className="user-profile-photo">
-          {photo || 'Photo'}
+    <div className="user-profile p-4">
+      <div className="user-profile-header flex flex-col md:flex-row gap-6 mb-6">
+        <div className="user-profile-photo w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
+          {photo ? (
+            <img src={photo} alt={`Photo de ${name}`} className="w-full h-full object-cover" />
+          ) : (
+            <div className="text-gray-400 text-xl">{name.charAt(0).toUpperCase()}</div>
+          )}
         </div>
         <div className="user-profile-basic-info">
-          <h2 className="user-profile-name">{name}, <span className="user-profile-age">{age} ans</span></h2>
-          <p className="user-profile-location">{city}, {country}</p>
-          <p className="user-profile-likes">&#128153; {likes} likes</p>
+          <h2 className="text-2xl font-bold">{name}, <span className="font-normal">{age} ans</span></h2>
+          <p className="text-gray-600 mb-2">{city}, {country}</p>
+          <p className="flex items-center gap-1">
+            <span className="text-blue-500">❤️</span> {likes} likes
+          </p>
         </div>
       </div>
       
-      <div className="user-profile-details">
+      <div className="user-profile-details space-y-6">
         <div className="user-profile-section">
-          <h3 className="user-profile-section-title">Bio</h3>
-          <p className="user-profile-bio">{bio}</p>
+          <h3 className="text-lg font-semibold mb-2">Bio</h3>
+          <p className="text-gray-700">{bio}</p>
         </div>
         
         {interests.length > 0 && (
           <div className="user-profile-section">
-            <h3 className="user-profile-section-title">Intérêts</h3>
-            <div className="user-profile-interests">
+            <h3 className="text-lg font-semibold mb-2">Intérêts</h3>
+            <div className="flex flex-wrap gap-2">
               {interests.map((interest, index) => (
-                <span key={index} className="user-profile-interest-tag">
+                <span key={index} className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
                   {interest}
                 </span>
               ))}
@@ -61,10 +68,10 @@ const UserProfile: React.FC<UserProfileProps> = ({
         
         {languages.length > 0 && (
           <div className="user-profile-section">
-            <h3 className="user-profile-section-title">Langues</h3>
-            <div className="user-profile-languages">
+            <h3 className="text-lg font-semibold mb-2">Langues</h3>
+            <div className="flex flex-wrap gap-2">
               {languages.map((language, index) => (
-                <span key={index} className="user-profile-language">
+                <span key={index} className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">
                   {language}
                 </span>
               ))}
@@ -74,21 +81,16 @@ const UserProfile: React.FC<UserProfileProps> = ({
 
         {comments.length > 0 && (
           <div className="user-profile-section">
-            <h3 className="user-profile-section-title">Commentaires</h3>
-            <div className="user-profile-comments">
+            <h3 className="text-lg font-semibold mb-2">Commentaires</h3>
+            <div className="space-y-3">
               {comments.map((comment, index) => (
-                <span key={index} className="user-profile-comment">
-                  {comment}
-                </span>
+                <div key={index} className="p-3 bg-gray-50 rounded-lg">
+                  "{comment}"
+                </div>
               ))}
             </div>
           </div>
         )}
-        
-        <div className="user-profile-section user-profile-actions">
-          <button className="user-profile-contact-btn">Contact</button>
-          <button className="user-profile-like-btn">Like</button>
-        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import GoogleIcon from './icons/GoogleIcon';
 
@@ -14,51 +14,78 @@ const formStyles = {
   divider: 'my-4 border-b border-gray-300 dark:border-gray-600',
   toggle: 'mt-4 text-center text-sm',
   errorMsg: 'text-red-500 text-sm mb-4',
+  successMsg: 'text-green-500 text-sm mb-4',
 };
 
 export default function AuthForm() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   
   const { signIn, signUp, signInWithGoogle } = useAuth();
 
-  const handleAuth = async (e: React.FormEvent) => {
+  const handleAuth = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccess(null);
     setIsLoading(true);
 
     try {
+      if (isSignUp && password !== confirmPassword) {
+        setError('Les mots de passe ne correspondent pas.');
+        setIsLoading(false);
+        return;
+      }
+
       let result;
       
       if (isSignUp) {
         result = await signUp(email, password);
+        if (!result.error) {
+          setSuccess('Compte créé avec succès!');
+        }
       } else {
         result = await signIn(email, password);
+        if (!result.error) {
+          setSuccess('Connexion réussie!');
+        }
       }
 
       if (result.error) {
         setError(result.error.message);
       }
-    } catch (err) {
-      setError('Une erreur s\'est produite. Veuillez réessayer.');
+    } catch (err: any) {
+      setError(err?.message || 'Une erreur s\'est produite. Veuillez réessayer.');
       console.error(err);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [email, password, confirmPassword, isSignUp, signIn, signUp]);
 
-  const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = useCallback(async () => {
     setError(null);
+    setSuccess(null);
+    setIsLoading(true);
     try {
       await signInWithGoogle();
-    } catch (err) {
-      setError('Échec de la connexion avec Google. Veuillez réessayer.');
+      setSuccess('Redirection vers Google...');
+    } catch (err: any) {
+      setError(err?.message || 'Échec de la connexion avec Google. Veuillez réessayer.');
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }, [signInWithGoogle]);
+
+  const toggleSignUp = useCallback(() => {
+    setIsSignUp(!isSignUp);
+    setError(null);
+    setSuccess(null);
+  }, [isSignUp]);
 
   return (
     <div className={formStyles.container}>
@@ -67,6 +94,7 @@ export default function AuthForm() {
       </h2>
       
       {error && <p className={formStyles.errorMsg}>{error}</p>}
+      {success && <p className={formStyles.successMsg}>{success}</p>}
       
       <form onSubmit={handleAuth}>
         <input
@@ -85,7 +113,20 @@ export default function AuthForm() {
           onChange={(e) => setPassword(e.target.value)}
           className={formStyles.input}
           required
+          minLength={6}
         />
+        
+        {isSignUp && (
+          <input
+            type="password"
+            placeholder="Confirmer le mot de passe"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className={formStyles.input}
+            required
+            minLength={6}
+          />
+        )}
         
         <button 
           type="submit" 
@@ -101,6 +142,7 @@ export default function AuthForm() {
       <button 
         onClick={handleGoogleSignIn} 
         className={formStyles.socialButton}
+        disabled={isLoading}
       >
         <GoogleIcon className="w-5 h-5 mr-2" />
         Se connecter avec Google
@@ -109,8 +151,9 @@ export default function AuthForm() {
       <p className={formStyles.toggle}>
         {isSignUp ? 'Déjà un compte ?' : 'Pas encore de compte ?'}
         <button
-          onClick={() => setIsSignUp(!isSignUp)}
+          onClick={toggleSignUp}
           className="ml-2 text-blue-600 hover:underline"
+          type="button"
         >
           {isSignUp ? 'Se connecter' : 'S\'inscrire'}
         </button>
