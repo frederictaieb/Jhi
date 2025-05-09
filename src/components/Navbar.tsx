@@ -1,12 +1,12 @@
 'use client'
 
 import React, { useState } from 'react'
-import Image from 'next/image'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Switch } from '@headlessui/react'
 import { useAuth } from '@/contexts/AuthContext'
 import Link from 'next/link'
+import '../styles/ThreeColumns.css'
 
 // Switch component for better modularity
 interface BroadcastSwitchProps {
@@ -57,16 +57,16 @@ const ProfileMenu: React.FC = () => {
       </div>
       <MenuItems
         transition
-        className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+        className="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
       >
         {user ? (
           <>
             <MenuItem>
               <Link
-                href="/dashboard"
+                href="/profile"
                 className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
               >
-                Tableau de bord
+                Mon profil
               </Link>
             </MenuItem>
             <MenuItem>
@@ -102,47 +102,26 @@ export default function Navbar(): React.ReactElement {
     <Disclosure as="nav" className="bg-gray-800">
       {() => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-16 items-center justify-between">
-              {/* Mobile menu button */}
-              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset">
-                  <span className="absolute -inset-0.5" />
-                  <span className="sr-only">Open main menu</span>
-                  <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
-                  <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
-                </DisclosureButton>
-              </div>
-
-              {/* Logo positioned on the left for desktop */}
-              <div className="flex flex-1 items-center justify-start">
-                <div className="flex shrink-0 items-center">
-                  <Link href={user ? '/dashboard' : '/'}>
-                    <Image
-                      alt="Logo"
-                      src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                      width={32}
-                      height={32}
-                      className="w-auto"
-                    />
-                  </Link>
-                </div>
-                <div className="ml-4 text-white font-semibold">Plateforme XRP</div>
-              </div>
-
-              {/* Right side elements: broadcast switch and profile */}
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {/* Only show broadcast switch if user is logged in */}
-                {user && (
-                  <BroadcastSwitch 
-                    enabled={broadcastEnabled} 
-                    setEnabled={setBroadcastEnabled} 
-                  />
-                )}
-                
-                {/* Profile menu */}
-                <ProfileMenu />
-              </div>
+          {/* Utilise la même structure de conteneur que ThreeColumnsContainer */}
+          <div className="mainboard-container" style={{ height: 'auto', paddingTop: '0', paddingBottom: '0' }}>
+            <div className="relative flex items-center h-16" style={{ width: '33.33%' }}>
+              <Link href={user ? '/dashboard' : '/'} className="flex items-center">
+                <div className="text-white font-semibold">Plateforme XRP</div>
+              </Link>
+            </div>
+            
+            {/* Colonne du milieu vide */}
+            <div style={{ width: '33.33%' }}></div>
+            
+            {/* Colonne de droite avec les contrôles */}
+            <div className="flex items-center justify-end" style={{ width: '33.33%' }}>
+              {user && (
+                <BroadcastSwitch 
+                  enabled={broadcastEnabled} 
+                  setEnabled={setBroadcastEnabled} 
+                />
+              )}
+              <ProfileMenu />
             </div>
           </div>
 
