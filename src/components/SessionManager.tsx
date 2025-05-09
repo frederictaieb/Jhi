@@ -23,9 +23,10 @@ interface SessionManagerProps {
   userId: string;
   userName: string;
   onClose: () => void;
+  isFullScreen?: boolean;
 }
 
-const SessionManager: React.FC<SessionManagerProps> = ({ userId, userName, onClose }) => {
+const SessionManager: React.FC<SessionManagerProps> = ({ userId, userName, onClose, isFullScreen = false }) => {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState<SessionStep>('webcam');
   const [sessionData, setSessionData] = useState<SessionData>({
@@ -54,8 +55,13 @@ const SessionManager: React.FC<SessionManagerProps> = ({ userId, userName, onClo
     // Enregistrer toutes les données de la session
     saveSessionData({ ...sessionData, tipAmount });
     
-    // Rediriger vers le tableau de bord
-    router.push('/dashboard');
+    // Fermer le modal et rediriger vers le tableau de bord
+    onClose();
+    
+    // Si nous sommes déjà sur la page Dashboard, pas besoin de rediriger
+    if (isFullScreen) {
+      router.push('/dashboard');
+    }
   };
 
   const handleBackToRating = () => {
@@ -90,6 +96,7 @@ const SessionManager: React.FC<SessionManagerProps> = ({ userId, userName, onClo
             userId={userId}
             userName={userName}
             onSessionEnd={handleSessionEnd}
+            isFullScreen={isFullScreen}
           />
         );
       case 'rating':
@@ -120,8 +127,12 @@ const SessionManager: React.FC<SessionManagerProps> = ({ userId, userName, onClo
     }
   };
 
+  const containerClasses = isFullScreen 
+    ? "w-full max-w-6xl mx-auto" 
+    : "session-manager";
+
   return (
-    <div className="session-manager">
+    <div className={containerClasses}>
       {renderCurrentStep()}
     </div>
   );

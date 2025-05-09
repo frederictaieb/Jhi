@@ -3,6 +3,7 @@
 import React, { useState, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import GoogleIcon from './icons/GoogleIcon';
+import { AuthError } from '@supabase/supabase-js';
 
 // Styles à externaliser dans un fichier CSS
 const formStyles = {
@@ -58,8 +59,9 @@ export default function AuthForm() {
       if (result.error) {
         setError(result.error.message);
       }
-    } catch (err: any) {
-      setError(err?.message || 'Une erreur s\'est produite. Veuillez réessayer.');
+    } catch (err: Error | AuthError | unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Une erreur s\'est produite. Veuillez réessayer.';
+      setError(errorMessage);
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -73,8 +75,9 @@ export default function AuthForm() {
     try {
       await signInWithGoogle();
       setSuccess('Redirection vers Google...');
-    } catch (err: any) {
-      setError(err?.message || 'Échec de la connexion avec Google. Veuillez réessayer.');
+    } catch (err: Error | unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Échec de la connexion avec Google. Veuillez réessayer.';
+      setError(errorMessage);
       console.error(err);
     } finally {
       setIsLoading(false);

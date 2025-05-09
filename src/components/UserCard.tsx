@@ -10,7 +10,7 @@ interface UserProps {
   country: string;
   likes?: number;
   photo?: string;
-  onClick: (userId: string, userName: string) => void;
+  onClick: (userId: string) => void;
 }
 
 const UserCard: React.FC<UserProps> = ({
@@ -26,7 +26,7 @@ const UserCard: React.FC<UserProps> = ({
   return (
     <div 
       className="user-row user-card-clickable" 
-      onClick={() => onClick(id, name)}
+      onClick={() => onClick(id)}
     >
       <div className="user-photo">{photo || 'photo'}</div>
       <div className="user-data">

@@ -30,7 +30,7 @@ const UserList: React.FC<UserListProps> = ({ users, columnType, title }) => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const handleUserClick = (userId: string, userName: string) => {
+  const handleUserClick = (userId: string) => {
     const user = users.find(u => u.id === userId);
     if (user) {
       setSelectedUser(user);

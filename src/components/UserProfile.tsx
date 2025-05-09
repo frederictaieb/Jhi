@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 interface UserProfileProps {
   name: string;
@@ -33,7 +34,13 @@ const UserProfile: React.FC<UserProfileProps> = ({
       <div className="user-profile-header flex flex-col md:flex-row gap-6 mb-6">
         <div className="user-profile-photo w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
           {photo ? (
-            <img src={photo} alt={`Photo de ${name}`} className="w-full h-full object-cover" />
+            <Image 
+              src={photo} 
+              alt={`Photo de ${name}`} 
+              className="w-full h-full object-cover"
+              width={128}
+              height={128}
+            />
           ) : (
             <div className="text-gray-400 text-xl">{name.charAt(0).toUpperCase()}</div>
           )}
@@ -85,7 +92,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
             <div className="space-y-3">
               {comments.map((comment, index) => (
                 <div key={index} className="p-3 bg-gray-50 rounded-lg">
-                  "{comment}"
+                  &ldquo;{comment}&rdquo;
                 </div>
               ))}
             </div>
