@@ -25,6 +25,8 @@ const WebcamSession: React.FC<WebcamSessionProps> = ({ userId, userName, onSessi
 
   // Simuler l'initialisation de la webcam
   useEffect(() => {
+    let localStream: MediaStream | null = null;
+    
     const setupWebcam = async () => {
       try {
         // Demander l'accès à la caméra et au microphone
@@ -32,6 +34,9 @@ const WebcamSession: React.FC<WebcamSessionProps> = ({ userId, userName, onSessi
           video: true, 
           audio: true 
         });
+        
+        // Stocker la référence au stream pour le nettoyage
+        localStream = stream;
         
         // Afficher le flux local
         if (localVideoRef.current) {
@@ -80,7 +85,6 @@ const WebcamSession: React.FC<WebcamSessionProps> = ({ userId, userName, onSessi
       clearInterval(timer);
       
       // Arrêter tous les flux vidéo
-      const localStream = localVideoRef.current?.srcObject as MediaStream | null;
       if (localStream) {
         localStream.getTracks().forEach(track => track.stop());
       }

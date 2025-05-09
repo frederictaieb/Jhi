@@ -1,5 +1,3 @@
-import { supabase } from '../supabaseClient';
-
 export interface UserType {
   id: string;
   name: string;

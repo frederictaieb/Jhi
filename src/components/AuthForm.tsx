@@ -3,7 +3,6 @@
 import React, { useState, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import GoogleIcon from './icons/GoogleIcon';
-import { AuthError } from '@supabase/supabase-js';
 
 // Styles à externaliser dans un fichier CSS
 const formStyles = {
@@ -59,7 +58,7 @@ export default function AuthForm() {
       if (result.error) {
         setError(result.error.message);
       }
-    } catch (err: Error | AuthError | unknown) {
+    } catch (err: Error | unknown) {
       const errorMessage = err instanceof Error ? err.message : 'Une erreur s\'est produite. Veuillez réessayer.';
       setError(errorMessage);
       console.error(err);
