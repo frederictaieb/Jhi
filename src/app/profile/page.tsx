@@ -68,18 +68,18 @@ const ProfilePage: React.FC = () => {
                 disabled
                 className="w-full px-3 py-2 border rounded-md bg-gray-100"
               />
-              <p className="text-xs text-gray-500 mt-1">L'email ne peut pas être modifié</p>
+              <p className="text-xs text-gray-500 mt-1">L&apos;email ne peut pas être modifié</p>
             </div>
             
             <div className="mb-4">
-              <label htmlFor="displayName" className="block text-sm font-medium mb-1">Nom d'affichage</label>
+              <label htmlFor="displayName" className="block text-sm font-medium mb-1">Nom d&apos;affichage</label>
               <input
                 type="text"
                 id="displayName"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                placeholder="Votre nom d'affichage"
+                placeholder="Votre nom d&apos;affichage"
               />
             </div>
             

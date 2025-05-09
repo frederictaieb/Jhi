@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react';
-// import { supabase } from '../../lib/supabaseClient'; // No longer needed directly here
+import { supabase } from '../../lib/supabaseClient';
 import { fetchAllUsers, UserType } from '../../lib/services/userService'; // Import from the new service
 
 // interface UserType { // This will be imported from userService
@@ -22,8 +22,8 @@ export default function TestPage() { // Renamed component to follow PascalCase c
         const fetchedUsers = await fetchAllUsers();
         console.log('Fetched users in component:', fetchedUsers);
         setUsers(fetchedUsers);
-      } catch (e: any) {
-        console.error('Error loading users in component:', e.message);
+      } catch (e: Error | unknown) {
+        console.error('Error loading users in component:', e instanceof Error ? e.message : 'Unknown error');
         setError('Failed to load users. Please try again later.'); // Set an error message for the UI
       } finally {
         setLoading(false);

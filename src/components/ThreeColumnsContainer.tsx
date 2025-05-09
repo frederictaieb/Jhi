@@ -18,8 +18,8 @@ const ThreeColumnsContainer: React.FC = () => {
       try {
         const fetchedUsers = await fetchAllUsers();
         setAllUsers(fetchedUsers);
-      } catch (e: any) {
-        console.error('Error loading users in ThreeColumnsContainer:', e.message);
+      } catch (e: Error | unknown) {
+        console.error('Error loading users in ThreeColumnsContainer:', e instanceof Error ? e.message : 'Unknown error');
         setError('Failed to load user profiles.');
       } finally {
         setLoading(false);

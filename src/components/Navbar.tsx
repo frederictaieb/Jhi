@@ -1,8 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Disclosure, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Switch } from '@headlessui/react'
 import { useAuth } from '@/contexts/AuthContext'
 import Link from 'next/link'
