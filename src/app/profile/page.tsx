@@ -96,7 +96,7 @@ const ProfilePage: React.FC = () => {
             </div>
             
             <div className="mb-4">
-              <label htmlFor="level" className="block text-sm font-medium mb-1">Niveau d'expertise</label>
+              <label htmlFor="level" className="block text-sm font-medium mb-1">Niveau d&apos;expertise</label>
               <select
                 id="level"
                 value={level}

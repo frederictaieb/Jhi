@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabaseClient';
-import { fetchAllUsers, UserType } from '../../lib/services/userService'; // Import from the new service
+import { fetchAllUsers, UserType } from '../../lib/services/userService';
 
 // interface UserType { // This will be imported from userService
 //   id: string;
